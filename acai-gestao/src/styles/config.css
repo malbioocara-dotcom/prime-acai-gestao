@@ -1,0 +1,540 @@
+/* ============================================================================
+   Configuração da Empresa — estilos da tela da engrenagem.
+
+   Só o que é exclusivo desta tela mora aqui: cartões, campos, botões e modais
+   continuam vindo de style.css, para a seção parecer parte do sistema e não
+   um formulário à parte.
+   ========================================================================== */
+
+/* ---------- Coluna de seções + painel ---------- */
+
+.config {
+  display: grid;
+  grid-template-columns: minmax(220px, 252px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  min-width: 0;
+}
+
+.config > * {
+  min-width: 0;
+}
+
+.config__secoes {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 12px 14px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.config__secoes-titulo {
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+.config__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.config__secao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.config__secao svg {
+  width: 18px;
+  height: 18px;
+  color: var(--texto-fraco);
+}
+
+.config__secao:hover,
+.config__secao:focus-visible {
+  background: var(--superficie-2);
+  color: var(--texto);
+}
+
+.config__secao:hover svg,
+.config__secao:focus-visible svg {
+  color: var(--primaria-clara);
+}
+
+.config__secao.is-active {
+  background: var(--primaria-fundo);
+  border-color: var(--primaria-borda);
+  color: var(--primaria-clara);
+}
+
+.config__secao.is-active svg {
+  color: var(--primaria-clara);
+}
+
+.config__secoes-rodape {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 12px 10px 2px;
+  border-top: 1px solid var(--borda);
+  color: var(--texto-fraco);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.config__secoes-rodape svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: var(--primaria-clara);
+}
+
+.config__painel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.config__painel[hidden] {
+  display: none;
+}
+
+.config__painel > form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.config__conteudo {
+  min-width: 0;
+}
+
+/* ---------- Blocos ---------- */
+
+.config__bloco-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.config__bloco-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--primaria-fundo);
+  color: var(--primaria);
+}
+
+.config__bloco-icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.config__campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+/* Somente leitura: o campo continua legível, mas visivelmente travado. */
+.config .campo__input:disabled {
+  color: var(--texto-suave);
+  cursor: not-allowed;
+}
+
+/* ---------- Logomarca ---------- */
+
+.logo {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.logo__previa {
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  padding: 10px;
+  border: 1px dashed var(--borda);
+  border-radius: 12px;
+  background: var(--superficie-2);
+  overflow: hidden;
+}
+
+.logo__img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo__vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--texto-fraco);
+  font-size: 12px;
+  text-align: center;
+}
+
+.logo__vazio svg {
+  width: 26px;
+  height: 26px;
+}
+
+.logo__lado {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.logo__nome {
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.logo__dica {
+  font-size: 12.5px;
+  color: var(--texto-suave);
+}
+
+.logo__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.logo__erro {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--perigo);
+}
+
+.logo__erro[hidden] {
+  display: none;
+}
+
+/* ---------- Erro geral e barra de ações ---------- */
+
+.config__erro {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--perigo);
+  font-size: 13px;
+}
+
+.config__erro[hidden] {
+  display: none;
+}
+
+/* A barra fica grudada no rodapé da janela: em formulário comprido, salvar não
+   exige rolar até o fim. */
+.config__acoes {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--borda);
+}
+
+.config__acoes[hidden] {
+  display: none;
+}
+
+.config__acoes-texto {
+  font-size: 12.5px;
+  color: var(--texto-fraco);
+}
+
+.config__botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- Submenu de configurações de vendas ---------- */
+
+.config-vendas {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.config-vendas__cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 2px 0;
+}
+
+.config-vendas__cabecalho h2 {
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.config-vendas__cabecalho p {
+  margin-top: 5px;
+  color: var(--texto-suave);
+  font-size: 13.5px;
+}
+
+.config-vendas__submenu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 6px;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.config-vendas__aba {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.config-vendas__aba svg {
+  width: 18px;
+  height: 18px;
+}
+
+.config-vendas__aba:hover,
+.config-vendas__aba.is-active {
+  background: var(--primaria-fundo);
+  color: var(--primaria-clara);
+}
+
+.config-vendas__aba:focus-visible {
+  outline: 2px solid var(--primaria);
+  outline-offset: 2px;
+}
+
+.config-vendas__painel[hidden] {
+  display: none;
+}
+
+.config-vendas__painel {
+  padding: 20px;
+}
+
+.config-vendas__painel .config__bloco-head {
+  align-items: center;
+}
+
+.config-vendas__painel .card__desc {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.config-vendas__painel .config__bloco-head .btn {
+  margin-left: auto;
+}
+
+.config-vendas__erro {
+  align-items: center;
+}
+
+.config-vendas__erro > div {
+  min-width: 0;
+}
+
+.config-vendas__erro .btn {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.config-vendas__painel .toolbar {
+  margin-bottom: 16px;
+}
+
+.config-vendas__painel .toolbar .campo__input {
+  width: 100%;
+  min-height: 42px;
+  background: var(--superficie-2);
+}
+
+.config-vendas__painel .table-wrap {
+  margin: 0 -20px -20px;
+}
+
+.config-vendas__painel .table {
+  min-width: 620px;
+}
+
+.config-vendas__painel .table th:first-child,
+.config-vendas__painel .table td:first-child {
+  padding-left: 24px;
+}
+
+.config-vendas__painel .table th:last-child,
+.config-vendas__painel .table td:last-child {
+  padding-right: 24px;
+}
+
+.config-vendas__painel .table__acoes {
+  flex-wrap: wrap;
+}
+
+/* ---------- Responsivo ---------- */
+
+@media (max-width: 900px) {
+  .config {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .config__secoes {
+    position: static;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .config__lista {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .config__secoes-rodape {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .config__lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .config-vendas__cabecalho {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .config-vendas__submenu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .config-vendas__aba {
+    padding-inline: 8px;
+    font-size: 12.5px;
+  }
+
+  .config-vendas__painel {
+    padding: 16px;
+  }
+
+  .config-vendas__painel .config__bloco-head {
+    flex-wrap: wrap;
+  }
+
+  .config-vendas__painel .config__bloco-head .btn {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+
+  .config-vendas__erro {
+    flex-wrap: wrap;
+  }
+
+  .config-vendas__erro .btn {
+    margin-left: 0;
+  }
+
+  .config-vendas__painel .table-wrap {
+    margin: 0 -16px -16px;
+  }
+
+  .config-vendas__painel .table th:first-child,
+  .config-vendas__painel .table td:first-child {
+    padding-left: 16px;
+  }
+
+  .config-vendas__painel .table th:last-child,
+  .config-vendas__painel .table td:last-child {
+    padding-right: 16px;
+  }
+
+  .config__campos {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    grid-template-columns: 1fr;
+  }
+
+  .logo__previa {
+    width: 100%;
+    height: 176px;
+  }
+
+  .config__acoes {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .config__botoes .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "login-projetos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Módulo de login, cadastro e recuperação de senha reutilizável (Neon Auth + Data API), em JavaScript puro. Extraído do projeto Prime Açaí - Gestão.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./config": "./src/config.js",
+    "./sessao": "./src/sessao.js",
+    "./validacao": "./src/validacao.js",
+    "./auth": "./src/services/auth.js",
+    "./auth-ui": "./src/auth-ui.js",
+    "./neon": "./src/lib/neon.js",
+    "./icons": "./src/lib/icons.js",
+    "./ui": "./src/ui.js",
+    "./estilo.css": "./src/styles/auth.css",
+    "./pages/*": "./src/pages/*.js"
+  },
+  "files": [
+    "src",
+    "sql",
+    "docs",
+    "exemplos"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "peerDependencies": {
+    "@neondatabase/neon-js": ">=0.1.0",
+    "lucide": ">=0.300.0"
+  },
+  "keywords": [
+    "login",
+    "auth",
+    "autenticacao",
+    "neon",
+    "neon-auth",
+    "spa",
+    "rbac"
+  ],
+  "license": "MIT"
+}
