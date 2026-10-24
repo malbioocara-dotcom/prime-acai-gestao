@@ -1,0 +1,11 @@
+# Configuração do Cloudflare Pages (hospedagem do site).
+#
+# Deploy manual:
+#   npx wrangler pages deploy dist --project-name=prime-acai-gestao
+#
+# O build continua sendo o do Vite (`npm run build`), que gera a pasta `dist`.
+# O arquivo `public/_redirects` garante o fallback de SPA no Cloudflare Pages.
+
+name = "prime-acai-gestao"
+compatibility_date = "2026-10-18"
+pages_build_output_dir = "dist"

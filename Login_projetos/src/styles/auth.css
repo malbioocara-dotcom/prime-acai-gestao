@@ -1,0 +1,553 @@
+/* ============================================================================
+   Login_projetos — telas de autenticação
+   Login, cadastro, recuperação e redefinição de senha.
+
+   Arquivo autocontido: tudo vive dentro de `.auth` e usa as variáveis `--a-*`
+   definidas logo abaixo, para não encostar no resto do app do host. Para mudar
+   a identidade visual, troque só as cores nesse bloco — nenhuma outra regra
+   depende do tema do sistema.
+
+   Carregue este CSS depois do CSS base do seu projeto:
+     import 'login-projetos/estilo.css'
+   ========================================================================== */
+
+.auth {
+  --a-roxo-escuro: #350044;
+  --a-roxo: #4a025b;
+  --a-roxo-claro: #6f1d7b;
+  --a-dourado: #ffbf00;
+  --a-verde: #00b131;
+  --a-verde-texto: #006d20;
+  --a-roxo-fundo: rgba(74, 2, 91, 0.1);
+  --a-roxo-borda: rgba(74, 2, 91, 0.24);
+  --a-dourado-fundo: rgba(255, 191, 0, 0.28);
+  --a-verde-fundo: rgba(0, 177, 49, 0.1);
+  --a-verde-borda: rgba(0, 177, 49, 0.3);
+  --a-fundo: #f5f2f8;
+  --a-branco: #ffffff;
+  --a-texto: #21172b;
+  --a-texto-suave: #6a6076;
+  --a-borda: #e4dcee;
+  --a-perigo: #c53030;
+  --a-sombra: 0 1px 2px rgba(33, 23, 43, 0.05), 0 18px 40px -28px rgba(53, 16, 82, 0.4);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  min-height: 100vh;
+  background: var(--a-fundo);
+  color: var(--a-texto);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+[data-theme='dark'] .auth {
+  --a-fundo: #171223;
+  --a-branco: #201a30;
+  --a-texto: #efeaf8;
+  --a-texto-suave: #a99fc0;
+  --a-borda: #332b48;
+  --a-sombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 18px 40px -28px rgba(0, 0, 0, 0.8);
+}
+
+/* ------------------------------------------------------------ painel roxo -- */
+
+.auth__marca {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px;
+  overflow: hidden;
+  background: linear-gradient(150deg, var(--a-roxo-escuro), var(--a-roxo) 62%, var(--a-roxo-claro));
+  color: #fff;
+}
+
+/* Brilho decorativo no canto, sem interferir no layout. */
+.auth__marca::after {
+  content: '';
+  position: absolute;
+  right: -140px;
+  bottom: -160px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--a-dourado-fundo), transparent 68%);
+  pointer-events: none;
+}
+
+.auth__marca-topo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth__logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.auth__logo svg {
+  width: 22px;
+  height: 22px;
+}
+
+.auth__marca-topo strong {
+  display: block;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+.auth__marca-topo small {
+  display: block;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.auth__chamada {
+  position: relative;
+  max-width: 30ch;
+}
+
+.auth__chamada h2 {
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+.auth__chamada p {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.auth__pontos {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.auth__pontos li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.auth__pontos svg {
+  width: 16px;
+  height: 16px;
+  color: var(--a-dourado);
+}
+
+/* --------------------------------------------------------------- formulário -- */
+
+.auth__painel {
+  display: grid;
+  place-items: center;
+  padding: 40px 24px;
+}
+
+.auth__caixa {
+  width: 100%;
+  max-width: 396px;
+}
+
+.auth__cabecalho {
+  margin-bottom: 26px;
+}
+
+.auth__cabecalho h1 {
+  font-size: 25px;
+  letter-spacing: -0.02em;
+}
+
+.auth__cabecalho p {
+  margin-top: 7px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--a-texto-suave);
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* -------------------------------------------------------------- campos ----- */
+
+.campo-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-auth__label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--a-texto-suave);
+}
+
+.campo-auth__req {
+  color: var(--a-perigo);
+}
+
+.campo-auth__controle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border: 1px solid var(--a-borda);
+  border-radius: 12px;
+  background: var(--a-branco);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.campo-auth__controle:focus-within {
+  border-color: var(--a-roxo);
+  box-shadow: 0 0 0 3.5px var(--a-roxo-borda);
+}
+
+.campo-auth__controle.is-erro {
+  border-color: var(--a-perigo);
+}
+
+.campo-auth__controle > svg {
+  width: 17px;
+  height: 17px;
+  color: var(--a-texto-suave);
+  opacity: 0.8;
+}
+
+.campo-auth__input {
+  flex: 1;
+  min-width: 0;
+  padding: 11.5px 0;
+  border: 0;
+  background: transparent;
+  color: var(--a-texto);
+  font: inherit;
+  font-size: 14.5px;
+  outline: none;
+}
+
+.campo-auth__input::placeholder {
+  color: var(--a-texto-suave);
+  opacity: 0.65;
+}
+
+/* O botão do olho não apaga o campo: ele só troca o `type` do input. */
+.campo-auth__olho {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: -4px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--a-texto-suave);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.campo-auth__olho:hover {
+  background: var(--a-roxo-fundo);
+  color: var(--a-roxo);
+}
+
+.campo-auth__olho svg {
+  width: 17px;
+  height: 17px;
+}
+
+.campo-auth__erro {
+  margin: 0;
+  font-size: 12px;
+  color: var(--a-perigo);
+}
+
+.campo-auth__erro[hidden] {
+  display: none;
+}
+
+/* Checklist de senha forte */
+.senha-regras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.senha-regras li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--a-texto-suave);
+  transition: color 0.15s ease;
+}
+
+.senha-regras li svg {
+  width: 13px;
+  height: 13px;
+  opacity: 0.5;
+}
+
+.senha-regras li.is-ok {
+  color: var(--a-verde-texto);
+}
+
+.senha-regras li.is-ok svg {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------- botões ----- */
+
+.btn-auth {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 12.5px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--a-dourado);
+  color: #24152a;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.btn-auth:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+.btn-auth:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-auth:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.btn-auth__girando {
+  display: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+.btn-auth.is-carregando .btn-auth__girando {
+  display: block;
+}
+
+.btn-auth--secundario {
+  background: transparent;
+  border: 1px solid var(--a-borda);
+  color: var(--a-texto);
+}
+
+.btn-auth--secundario:hover:not(:disabled) {
+  filter: none;
+  background: var(--a-roxo-fundo);
+  border-color: var(--a-lilas);
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-auth__girando {
+    animation-duration: 2s;
+  }
+}
+
+/* ------------------------------------------------------------- mensagens --- */
+
+.alerta-auth {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.alerta-auth[hidden] {
+  display: none;
+}
+
+.alerta-auth svg {
+  width: 17px;
+  height: 17px;
+  margin-top: 1px;
+}
+
+.alerta-auth--erro {
+  background: rgba(197, 48, 48, 0.08);
+  border-color: rgba(197, 48, 48, 0.26);
+  color: #9b2c2c;
+}
+
+[data-theme='dark'] .alerta-auth--erro {
+  color: #fca5a5;
+}
+
+.alerta-auth--ok {
+  background: var(--a-verde-fundo);
+  border-color: var(--a-verde-borda);
+  color: var(--a-verde-texto);
+}
+
+[data-theme='dark'] .alerta-auth--ok {
+  color: #86efac;
+}
+
+.alerta-auth--info {
+  background: var(--a-roxo-fundo);
+  border-color: var(--a-roxo-borda);
+  color: var(--a-roxo);
+}
+
+[data-theme='dark'] .alerta-auth--info {
+  color: #d6bcfa;
+}
+
+/* --------------------------------------------------------------- rodapé ---- */
+
+.auth__rodape {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--a-texto-suave);
+}
+
+.auth__rodape a {
+  color: var(--a-roxo);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth__rodape a:hover {
+  text-decoration: underline;
+}
+
+.auth__rodape-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.auth__voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--a-texto-suave);
+  text-decoration: none;
+}
+
+.auth__voltar:hover {
+  color: var(--a-roxo);
+}
+
+.auth__voltar svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Tela cheia de espera, enquanto o app confere a sessão. */
+.auth--carregando {
+  grid-template-columns: 1fr;
+  place-items: center;
+}
+
+.auth__espera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  color: var(--a-texto-suave);
+  font-size: 14px;
+}
+
+.auth__espera .btn-auth__girando {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-width: 3px;
+  border-color: var(--a-roxo-borda);
+  border-top-color: var(--a-roxo);
+}
+
+/* ------------------------------------------------------------- responsivo -- */
+
+@media (max-width: 900px) {
+  .auth {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* No celular o painel roxo vira um cabeçalho enxuto. */
+  .auth__marca {
+    padding: 26px 24px;
+    gap: 0;
+    justify-content: flex-start;
+  }
+
+  .auth__marca::after {
+    right: -180px;
+    bottom: -220px;
+  }
+
+  .auth__chamada,
+  .auth__pontos {
+    display: none;
+  }
+
+  .auth__painel {
+    padding: 30px 20px 48px;
+    align-items: start;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth__rodape-linha {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

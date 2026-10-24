@@ -1,0 +1,40 @@
+{
+  "name": "acai-gestao",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "testar:base": "node neon/testar-base.mjs",
+    "validar:migracoes": "node neon/validar-migracoes.mjs",
+    "verificar:estoque": "node neon/verificar-estoque.mjs",
+    "verificar:compras": "node neon/verificar-compras.mjs",
+    "verificar:vendas": "node neon/verificar-vendas.mjs",
+    "verificar:estoque:concorrencia": "node neon/verificar-estoque.mjs --concorrencia",
+    "testar:estoque:api": "node neon/testar-estoque-api.mjs",
+    "deploy:cloudflare": "npm run build && wrangler pages deploy dist --project-name=prime-acai-gestao --branch=main"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "jsdom": "^30.1.3",
+    "pg": "^8.23.1",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.151.1"
+  },
+  "dependencies": {
+    "@neondatabase/neon-js": "^0.8.0-beta",
+    "chart.js": "^4.5.1",
+    "login-projetos": "file:../Login_projetos",
+    "lucide": "^1.58.0"
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
